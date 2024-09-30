@@ -1,2 +1,2 @@
 # kridel_fragmentomics
-Repository of scripts created during my work with the Kridel Lab at UHN.
+Repository of scripts created during my time at the Kridel Lab.
