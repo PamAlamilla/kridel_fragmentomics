@@ -5,10 +5,12 @@
 #SBATCH -c 6
 #SBATCH --mem=40000M
 #SBATCH -t 0-06:00
-#SBATCH -J Pams-Job
-#SBATCH --array=0-32
+#SBATCH -J My_Job #Change to your job name
+#SBATCH --array=0-32 #Change to the number of BAM files minus 1
 
-#Creator: Pamela Alamilla
+#Description: This script reads through a list of BAM files and applies the CollectInsertSizeMetrics tool (from Picard) to each one. 
+#The output is two files, a text file containing insert size metrics and a pdf file with the associated histogram. 
+#Author: Pamela Alamilla
 #Date: 05/06/2024
 
 #Load necessary modules
