@@ -45,20 +45,36 @@ collectPercents = function(ListOfSamples, fragment_length) {
 ##Controls----
 setwd("./controls_raw") #Move to directory with fragment count files for controls
 
-# Make vector of file names to be read in
-controls_fileNames = sort(list.files(pattern = "*_insert_size_metrics.txt"))
-
-# Make vector of sample names
-controls_sampleNames = generateSampleNames(controls_fileNames)
+controls_fileNames = sort(list.files(pattern = "*_insert_size_metrics.txt")) # Make vector of file names
+controls_sampleNames = generateSampleNames(controls_fileNames) # Make vector of sample names
 length(controls_sampleNames) == length(controls_fileNames) #Expect TRUE
 
 # Make list of sample data & assign names to samples
 controls_raw_list = lapply(controls_fileNames, FUN=read.table, skip=10, header=T)
 names(controls_raw_list) = controls_sampleNames
 
-#Add column of fraction percentages to each sample in list
+#Add column of fragment percentages to each sample in list
 for (i in 1:length(controls_raw_list)) {
   totalCount = sum(controls_raw_list[[i]][2])
   percentages_vector = (controls_raw_list[[i]][[2]]/totalCount) *100
   controls_raw_list[[i]]["percentages"] <- percentages_vector
+}
+
+#Read in fragment count tables----
+##Lymphomas----
+setwd("../lymphomas_raw") #Move to directory with fragment count files for lymphomas
+
+lymphomas_fileNames = sort(list.files(pattern = "*_insert_size_metrics.txt")) # Make vector of file names
+lymphomas_sampleNames = generateSampleNames(lymphomas_fileNames) # Make vector of sample names
+length(lymphomas_sampleNames) == length(lymphomas_fileNames) #Expect TRUE
+
+# Make list of sample data & assign names to samples
+lymphomas_raw_list = lapply(lymphomas_fileNames, FUN=read.table, skip=10, header=T)
+names(lymphomas_raw_list) = lymphomas_sampleNames
+
+#Add column of fragment percentages to each sample in list
+for (i in 1:length(lymphomas_raw_list)) {
+  totalCount = sum(lymphomas_raw_list[[i]][2])
+  percentages_vector = (lymphomas_raw_list[[i]][[2]]/totalCount) *100
+  lymphomas_raw_list[[i]]["percentages"] <- percentages_vector
 }
